@@ -3,12 +3,12 @@ import io from "socket.io-client";
 export const Context = createContext();
 
 const initState = {
-  Hello: [
-    
-  ],
-  Today: [
-    
-  ],
+  Hello: [],
+  Today: [],
+};
+
+const initStateUser = {
+  userName: "",
 };
 
 function reducer(state, action) {
@@ -31,38 +31,44 @@ function reducer(state, action) {
         ...state,
         [name]: [],
       };
+    case "ADD_USER":
+      return {
+        userName: action.payload.userName,
+      };
     default: {
       return state;
     }
   }
 }
 
-// const user = "aaron" + Math.random(100).toFixed(2);
 let socket;
-let user = prompt("Name");
+
 function sendChatAction(value) {
   socket.emit("chat message", value);
 }
 
-function setUser(value) {
-  user = value;
-}
-
 function Store(props) {
   const [allChats, dispatch] = useReducer(reducer, initState);
-  console.log(allChats);
+  const [userLogin, dispatchUser] = useReducer(reducer, initStateUser);
+
   if (!socket) {
     //cream o conexiune cu functia io si setam la portul 3001
     socket = io(":3001");
     socket.on("chat message", function (msg) {
-      console.log({ msg });
+      // console.log({ msg });
       dispatch({ type: "RECEIVE_MESSAGE", payload: msg });
     });
   }
-
+  let user = userLogin.userName;
   return (
     <Context.Provider
-      value={{ allChats, sendChatAction, setUser, user, dispatch }}
+      value={{
+        allChats,
+        sendChatAction,
+        user,
+        dispatch,
+        dispatchUser,
+      }}
     >
       {props.children}
     </Context.Provider>

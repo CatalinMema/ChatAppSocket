@@ -2,7 +2,7 @@ import { Button } from "@material-ui/core";
 import React, { useContext, useRef, useState } from "react";
 import styled from "styled-components";
 import { Context } from "../store/Store";
-function ChatInput({ activeTopic, channelName, chatRef, from }) {
+function ChatInput({ activeTopic, chatRef, from }) {
   const { sendChatAction } = useContext(Context);
   const inputRef = useRef(null);
   const [textValue, setTextValue] = useState("");

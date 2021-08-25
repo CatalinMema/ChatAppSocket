@@ -5,7 +5,7 @@ import CreateIcon from "@material-ui/icons/Create";
 import AddIcon from "@material-ui/icons/Add";
 import SidebarOption from "./SidebarOption";
 import { Context } from "../store/Store";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore"
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import Message from "./Message";
 import ChatInput from "./ChatInput";
 function AppBody() {
@@ -44,12 +44,12 @@ function AppBody() {
           </SidebarInfo>
           <CreateIcon />
         </SidebarHeader>
-        <SidebarOption Icon={ExpandMoreIcon} title="Channels"/>
-       
+        <SidebarOption Icon={ExpandMoreIcon} title="Channels" />
+
         {topics.map((topic) => (
           <SidebarOption onClick={selectChannel} key={topic} title={topic} />
         ))}
-         <SidebarOption
+        <SidebarOption
           onClick={addChannel}
           Icon={AddIcon}
           addChannelOption
@@ -65,17 +65,12 @@ function AppBody() {
         <ChatMessages>
           {allChats[activeTopic]?.map((message, index) => {
             return (
-              <Message key={index} message={message.msg} user={message.from} />
+              <Message key={index} message={message.msg} name={message.from} />
             );
           })}
           <ChatBottom ref={chatRef} />
         </ChatMessages>
-        <ChatInput
-          chatRef={chatRef}
-          activeTopic={activeTopic}
-          from={user}
-          // channelName={roomDetails?.data().name}
-        />
+        <ChatInput chatRef={chatRef} activeTopic={activeTopic} from={user} />
       </ChatContainer>
     </>
   );
@@ -132,7 +127,11 @@ const SidebarInfo = styled.div`
   }
 `;
 
-const ChatMessages = styled.div``;
+const ChatMessages = styled.div`
+  ::-webkit-scrollbar {
+    width: 1em;
+  }
+`;
 
 const ChatContainer = styled.div`
   flex: 0.7;
@@ -145,7 +144,8 @@ const Header = styled.div`
   display: flex;
   justify-content: space-between;
   padding: 1.1em;
-  border-bottom: 1px solid lightgray;
+  border-bottom: 1px solid black;
+  margin-bottom: 1em;
 `;
 
 const HeaderLeft = styled.div`
